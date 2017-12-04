@@ -32,7 +32,7 @@ module.exports.locationInfo = function(req, res){
   res.render('locations-info', { 
         title: 'Location Info',
         pageHeader: {
-            title: 'Starcups'
+        title: 'Starcups'
         },
         sidebar: {
             context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
