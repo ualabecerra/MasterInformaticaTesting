@@ -153,3 +153,9 @@ db.updateUser("heroku_bw86gphw", {
 	{role : "dbAdmin", db: "heroku_bw86gphw"},
 	{role : "readWrite", db: "heroku_bw86gphw"} 
 	]})
+
+git add .
+git commit -m ""
+git remote add origin https://github.com/ualabecerra/MasterInformaticaTesting.git
+git push -u origin master
+git push herokuu master
