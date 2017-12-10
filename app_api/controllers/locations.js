@@ -28,6 +28,7 @@ var buildLocationList = function(results) {
   results.forEach(function(doc) {
     locations.push({
       distance: theEarth.getDistanceFromRads(doc.dis),
+      _id : doc.obj._id,
       name: doc.obj.name,
       address: doc.obj.address,
       rating: doc.obj.rating,
