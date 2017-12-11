@@ -39,16 +39,18 @@ var buildLocationList = function(results) {
   return locations;
 };
 
+
+
 module.exports.locationsListByDistance = function(req, res){
-  var lng = parseFloat(req.query.lng);
-  var lat = parseFloat(req.query.lat);
+  var lng = parseFloat(req.params.lng);
+  var lat = parseFloat(req.params.lat);
   var point = {
     type: "Point",
     coordinates: [lng, lat]
   };
   var geoOptions = {
     spherical: true,
-    maxDistance: theEarth.getRadsFromDistance(1000),
+    maxDistance: theEarth.getRadsFromDistance(20000),
     num: 10
   };
   if (!lng || !lat) {
@@ -97,29 +99,21 @@ module.exports.locationsCreateOne = function(req, res){
       sendJsonResponse(res, 201, location);
     }
   }); 
-  
-/*  var location;
-
-  location = {name: req.body.name,
-    address: req.body.address,
-    facilities: req.body.facilities.split(","),
-    coords: [parseFloat(req.body.lng), parseFloat(req.body.lat)],
-    openingTimes: [{
-      days: req.body.days1,
-      opening: req.body.opening1,
-      closing: req.body.closing1,
-      closed: req.body.closed1,
-    }, {
-      days: req.body.days2,
-      opening: req.body.opening2,
-      closing: req.body.closing2,
-      closed: req.body.closed2,
-    }]};
-
-    sendJsonResponse(res, 201, location); */
-
 };
 
+module.exports.locationsReadAll = function(req, res){
+ Loc
+  .find({})
+  .exec(function(err, locations){
+    if (!locations) {
+     sendJsonResponse(res, 404, {"message" : "locations not found"});
+     
+    } else if (err) { sendJsonResponse(res, 404, err);  }
+      else { 
+         sendJsonResponse(res, 200, locations);
+        }
+  });
+};
 
 module.exports.locationsReadOne = function(req, res){
  if (req.params && req.params.locationid) {
