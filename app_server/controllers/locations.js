@@ -59,6 +59,13 @@ var renderDetailPage = function(err, res, responseBody){
     });
 };
 
+var renderReviewFormPage = function(err, res, responseBody){
+    res.render('location-review-form', 
+        { title: 'Add Review', 
+        location : responseBody});    
+};
+
+
 /* GET home page */
 module.exports.homelist = function(req, res){
   var requestOption, path;
@@ -136,5 +143,44 @@ module.exports.locationInfo = function(req, res){
 
 /* GET 'Add review' page */
 module.exports.addReview = function(req, res){
-  res.render('location-review-form', { title: 'Add Review' });
+  var requestOption, path;
+
+  path = '/api/locations/' + req.params.locationid;
+  requestOption = {
+    url : apiOptions.server + path,
+    method : 'GET',
+    json : {},
+  };
+
+  request(requestOption, function(err,response,body){
+    renderReviewFormPage(req, res, body);
+
+  });
+  
+};
+
+
+/* POST 'Add review' page */
+module.exports.doAddReview = function(req, res){
+  var requestOption, path;
+  var postData = {
+        author : req.body.name,
+        rating : req.body.rating,
+        reviewText: req.body.review
+    };
+
+  path = '/api/locations/' + req.params.locationid + '/reviews';
+  requestOption = {
+    url : apiOptions.server + path,
+    method : 'POST',
+    json : postData
+  };
+
+  request(requestOption, function(err,response,body){
+    if (response.statusCode === 201) {
+      res.redirect('/location/' + req.params.locationid);
+    }
+
+  });
+  
 };
